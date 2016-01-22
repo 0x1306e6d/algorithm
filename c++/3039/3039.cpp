@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <hash_map>
 
 typedef struct _Student
 {
@@ -14,7 +15,7 @@ int main()
 	int index = 0;
 	int n;
 	std::cin >> n;
-	Student* students = new Student[n];
+	stdext::hash_map<int, std::vector<Student*>*> students_by_understand;
 	for (int i = 0; i < n; ++i)
 	{
 		char situation;
