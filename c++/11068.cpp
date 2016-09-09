@@ -1,3 +1,16 @@
+/*
+    11068 : 회문인 숫자
+    URL : https://www.acmicpc.net/problem/11068
+    Input :
+        3
+        747
+        255
+        946734
+    Output :
+        1
+        1
+        0
+*/
 #include <iostream>
 #include <vector>
 

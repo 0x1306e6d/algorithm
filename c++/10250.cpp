@@ -1,3 +1,14 @@
+/*
+    10250 : ACM 호텔
+    URL : https://www.acmicpc.net/problem/10250
+    Input : 
+        2
+        6 12 10
+        30 50 72
+    Output : 
+        402
+        1203
+*/
 #include <iostream>
 
 int main()

@@ -1,3 +1,11 @@
+/*
+    7287 : 등록
+    URL : https://www.acmicpc.net/problem/7287
+    Input : 
+    Output : 
+        123
+        Your_ICPC_Team_Name
+*/
 #include <iostream>
 
 int main()
