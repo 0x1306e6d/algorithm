@@ -1,50 +1,51 @@
+/*
+    10253 : 헨리
+    URL : https://www.acmicpc.net/problem/10253
+    Input :
+        3
+        4 23
+        5 7
+        8 11
+    Output :
+        138
+        70
+        4070
+*/
 #include <iostream>
 
-int find_biggest(int a, int b);
-bool is_bigger(int a, int b, int c);
-void fraction_subtract(int* a, int* b, int c);
+using namespace std;
+
+int find_henry(int p, int q);
 
 int main()
 {
     int T;
-    std::cin >> T;
+    cin >> T;
     while (T--)
     {
-        int a, b, c;
-        std::cin >> a >> b;
-        while (a > 1)
-        {
-            c = find_biggest(a, b);
-            fraction_subtract(&a, &b, c);
-        }
-        std::cout << b << std::endl;
+        int a, b;
+        cin >> a >> b;
+        cout << find_henry(a, b) << endl;
     }
     return 0;
 }
 
-int find_biggest(int a, int b)
+int find_henry(int p, int q)
 {
-    if (a == 1)
+    while(p > 1)
     {
-        return b;
-    }
-    for (int i = 2; i <= b; ++i)
-    {
-        if (is_bigger(a, b, i))
+        if (q % p == 0)
         {
-            return i;
+            q = q / p;
+            p = p / p;
+            if (p == 1)
+            {
+                return q;
+            }
         }
+        int x = (q / p) + 1;
+        p = p * x - q;
+        q = q * x;
     }
-    return b;
-}
-
-bool is_bigger(int a, int b, int c)
-{
-    return (a * c) >= b;
-}
-
-void fraction_subtract(int* a, int* b, int c)
-{
-    *a = (*a * c) - *b; 
-    *b = *b * c;
+    return q;
 }
