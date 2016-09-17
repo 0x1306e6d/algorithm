@@ -1,65 +1,92 @@
+/*
+    11070 : 피타고라스 기대값
+    URL : https://www.acmicpc.net/problem/11070
+    Input :
+        2
+        3 5
+        1 2 3 5
+        1 3 10 1
+        1 2 0 7
+        2 3 9 3
+        3 2 4 5
+        4 6
+        1 2 0 11
+        1 3 17 13
+        1 4 17 1
+        2 3 7 12
+        2 4 19 17
+        3 4 17 0
+    Output :
+        871
+        100
+        753
+        103
+*/
 #include <iostream>
+#include <vector>
 #include <cmath>
+
+using namespace std;
 
 int main()
 {
     int T;
-    std::cin >> T;
-    for (int i = 0; i < T; ++i)
+    cin >> T;
+    while (T--)
     {
         int n, m;
-        std::cin >> n;
-        std::cin >> m;
-        int scores[n];
-        int losts[n];
-        for (int j = 0; j < n; ++j)
+        cin >> n >> m;
+
+        vector< pair<int, int> > TEAMS;
+        for (int i = 0; i < n; ++i)
         {
-            scores[j] = 0;
-            losts[j] = 0;
+            TEAMS.push_back(pair<int, int>(0, 0));
         }
-        for (int j = 0; j < m; ++j)
+        for (int i = 0; i < m; ++i)
         {
             int a, b, p, q;
-            std::cin >> a;
-            std::cin >> b;
-            std::cin >> p;
-            std::cin >> q;
-            scores[a - 1] += p;
-            losts[a - 1] += q;
-            scores[b - 1] += q;
-            losts[b - 1] += p;
+            cin >> a >> b >> p >> q;
+            TEAMS[a - 1].first += p;
+            TEAMS[a - 1].second += q;
+            TEAMS[b - 1].first += q;
+            TEAMS[b - 1].second += p;
         }
-        int max = -987654321;
-        int min = 987654321;
-        for (int j = 0; j < n; ++j)
+
+        long long MIN = 987654321;
+        long long MAX = 0;
+        
+        for (int i = 0; i < n; ++i)
         {
-            int W;
-            int S = scores[j];
-            int A = losts[j];
-            if (S == 0)
+            pair<int, int> team = TEAMS[i];
+            long long S = team.first * team.first;
+            long long A = team.second * team.second;
+            long long W;
+            if (A == 0)
             {
-                W = 0;
-            }
-            else if (A == 0)
-            {
-                W = 1000;
+                if (S == 0)
+                {
+                    W = 0LL;
+                }
+                else
+                {
+                    W = 1000LL;
+                }
             }
             else
-            { 
-                W = std::floor(1000LL * ((S * S) / (long double) ((S * S) + (A * A))));
-            }
-
-            if (W > max)
             {
-                max = W;
+                W = ((double) S * 1000LL / (double) (S + A));
             }
-            if (W < min)
+            if (W < MIN)
             {
-                min = W;
+                MIN = W;
+            }
+            if (W > MAX)
+            {
+                MAX = W;
             }
         }
-        std::cout << max << std::endl;
-        std::cout << min << std::endl;
+        cout << MAX << endl;
+        cout << MIN << endl;
     }
     return 0;
 }
