@@ -1,16 +1,16 @@
 /*
     11724 : 연결 요소의 개수
     URL : https://www.acmicpc.net/problem/11724
-    Input 1 :
+    Input #1 :
         6 5
         1 2
         2 5
         5 1
         3 4
         4 6
-    Output 1 :
+    Output #1 :
         2
-    Input 2 :
+    Input #2 :
         6 8
         1 2
         2 5
@@ -20,7 +20,7 @@
         5 4
         2 4
         2 3
-    Output 2 :
+    Output #2 :
         1
 */
 #include <iostream>
