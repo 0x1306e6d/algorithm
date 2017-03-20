@@ -11,74 +11,64 @@
         8
 */
 #include <iostream>
-#include <vector>
+#include <queue>
+
+using namespace std;
 
 #define TOMATO_RIPEN 1
 #define TOMATO_NOT_RIPEN 0
 #define TOMATO_NOT_EXISTS -1
 
-using namespace std;
+typedef pair<int, int> Point;
 
 int main()
 {
-    int M, N;
+    queue<Point> frontier;
+
+    int M;
+    int N;
     cin >> M;
     cin >> N;
 
-    bool is_all_ripen = true;
-    bool has_ripen_tomato = false;
     int storage[N][M];
-    int tomato_count = 0;
-    vector< pair<int, int> > ripens;
-    for (int i = 0; i < N; i++)
+    int goal = 0;
+    for (int y = 0; y < N; y++)
     {
-        for (int j = 0; j < M; j++)
+        for (int x = 0; x < M; x++)
         {
-            int state;
-            cin >> state;
+            int tomato;
+            cin >> tomato;
 
-            storage[i][j] = state;
-            if (state == TOMATO_RIPEN)
+            storage[y][x] = tomato;
+            if (tomato == TOMATO_RIPEN)
             {
-                ripens.push_back(make_pair(i, j));
-                tomato_count++;
-                if (!has_ripen_tomato)
-                {
-                    has_ripen_tomato = true;
-                }
+                frontier.push(make_pair(x, y));
             }
-            if (state == TOMATO_NOT_RIPEN)
+            else if (tomato == TOMATO_NOT_RIPEN)
             {
-                tomato_count++;
-                if (is_all_ripen)
-                {
-                    is_all_ripen = false;
-                }
+                goal++;
             }
         }
     }
-    if (is_all_ripen)
-    {
-        cout << 0;
-        return 0;
-    }
-    else if (!has_ripen_tomato)
-    {
-        cout << -1;
-        return 0;
-    }
 
     int day = 0;
-    int last_ripen_count = ripens.size();
     while (true)
     {
         day++;
 
-        for (int i = 0; i < last_ripen_count; i++)
+        int initial_size = frontier.size();
+        if (initial_size == 0)
         {
-            pair<int, int> tomato = ripens.at(i);
-            int y = tomato.first;
-            int x = tomato.second;
+            cout << -1;
+            return 0;
+        }
+
+        for (int i = 0; i < initial_size; i++)
+        {
+            Point tomato = frontier.front();
+            frontier.pop();
+            int x = tomato.first;
+            int y = tomato.second;
 
             // Top
             if (y > 0)
@@ -86,7 +76,8 @@ int main()
                 if (storage[y - 1][x] == TOMATO_NOT_RIPEN)
                 {
                     storage[y - 1][x] = TOMATO_RIPEN;
-                    ripens.push_back(make_pair(y - 1, x));
+                    goal--;
+                    frontier.push(make_pair(x, y - 1));
                 }
             }
             // Bottom
@@ -95,7 +86,8 @@ int main()
                 if (storage[y + 1][x] == TOMATO_NOT_RIPEN)
                 {
                     storage[y + 1][x] = TOMATO_RIPEN;
-                    ripens.push_back(make_pair(y + 1, x));
+                    goal--;
+                    frontier.push(make_pair(x, y + 1));
                 }
             }
             // Left
@@ -104,7 +96,8 @@ int main()
                 if (storage[y][x - 1] == TOMATO_NOT_RIPEN)
                 {
                     storage[y][x - 1] = TOMATO_RIPEN;
-                    ripens.push_back(make_pair(y, x - 1));
+                    goal--;
+                    frontier.push(make_pair(x - 1, y));
                 }
             }
             // Right
@@ -113,20 +106,13 @@ int main()
                 if (storage[y][x + 1] == TOMATO_NOT_RIPEN)
                 {
                     storage[y][x + 1] = TOMATO_RIPEN;
-                    ripens.push_back(make_pair(y, x + 1));
+                    goal--;
+                    frontier.push(make_pair(x + 1, y));
                 }
             }
         }
 
-        int new_count = ripens.size();
-        if (last_ripen_count == new_count)
-        {
-            cout << -1;
-            return 0;
-        }
-
-        last_ripen_count = new_count;
-        if (last_ripen_count == tomato_count)
+        if (goal == 0)
         {
             cout << day;
             return 0;
