@@ -18,29 +18,34 @@ int main()
     int N;
     cin >> N;
 
-    int array[N];
-    int sum[N];
-    for (int i = 0; i < N; i++)
+    int sum = INT_MIN;
+    int largest = INT_MIN;
+    while (N--)
     {
-        cin >> array[i];
-    }
+        int i;
+        cin >> i;
 
-    sum[0] = array[0];
-    int largest = sum[0];
-    for (int i = 1; i < N; i++)
-    {
-        sum[i] = array[i];
-        if (sum[i - 1] > 0)
+        if (sum == INT_MIN)
         {
-            sum[i] = sum[i - 1] + sum[i];
+            sum = i;
+        }
+        else
+        {
+            if (sum > 0)
+            {
+                sum = sum + i;
+            }
+            else
+            {
+                sum = i;
+            }
         }
 
-        if (sum[i] > largest)
+        if (sum > largest)
         {
-            largest = sum[i];
+            largest = sum;
         }
     }
     cout << largest;
-
     return 0;
 }
