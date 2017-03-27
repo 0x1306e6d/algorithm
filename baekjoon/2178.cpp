@@ -37,7 +37,7 @@ typedef struct _node
     Point point;
 } Node;
 
-int SearchAStar();
+int SearchBFS();
 bool GoalTest(Point point);
 Point MakePoint(int x, int y);
 Node MakeNode(int path_cost, int x, int y);
@@ -68,19 +68,20 @@ int main()
         }
     }
 
-    int min = SearchAStar();
+    int min = SearchBFS();
     cout << min;
 
     return 0;
 }
 
-int SearchAStar()
+int SearchBFS()
 {
     queue<Node> frontier;
     bool frontierCheck[MAX][MAX] = {0};
     bool explored[MAX][MAX] = {0};
 
     frontier.push(MakeNode(1, 0, 0));
+    frontierCheck[0][0] = 1;
     while (1)
     {
         if (frontier.empty())
@@ -91,7 +92,7 @@ int SearchAStar()
 
         Node node = frontier.front();
         frontier.pop();
-        frontierCheck[node.point.x][node.point.y] = 1;
+        frontierCheck[node.point.x][node.point.y] = 0;
         explored[node.point.x][node.point.y] = 1;
 
         // Top
@@ -107,6 +108,7 @@ int SearchAStar()
                 else
                 {
                     frontier.push(child);
+                    frontierCheck[child.point.x][child.point.y] = 1;
                 }
             }
         }
@@ -124,6 +126,7 @@ int SearchAStar()
                 else
                 {
                     frontier.push(child);
+                    frontierCheck[child.point.x][child.point.y] = 1;
                 }
             }
         }
@@ -141,6 +144,7 @@ int SearchAStar()
                 else
                 {
                     frontier.push(child);
+                    frontierCheck[child.point.x][child.point.y] = 1;
                 }
             }
         }
@@ -158,11 +162,10 @@ int SearchAStar()
                 else
                 {
                     frontier.push(child);
+                    frontierCheck[child.point.x][child.point.y] = 1;
                 }
             }
         }
-
-        frontierCheck[node.point.x][node.point.y] = 0;
     }
 
     // Failure
