@@ -20,29 +20,35 @@
 */
 #include <iostream>
 #include <queue>
+#include <vector>
+#include <functional>
+#include <stdio.h>
 
 #define MAX 101
 
 using namespace std;
 
-typedef struct _point
+typedef struct
 {
     char x;
     char y;
 } Point;
 
-typedef struct _node
+typedef struct
 {
-    short path_cost;
+    int gn;
+    int hn;
     Point point;
 } Node;
 
-int SearchBFS();
+int SearchAStar();
 bool GoalTest(Point point);
 Point MakePoint(int x, int y);
-Node MakeNode(int path_cost, int x, int y);
+Node MakeNode(int gn, int x, int y);
+int ParseHN(int x, int y);
 
-int N, M;
+int N;
+int M;
 bool TABLE[MAX][MAX];
 
 int main()
@@ -68,17 +74,16 @@ int main()
         }
     }
 
-    int min = SearchBFS();
+    int min = SearchAStar();
     cout << min;
 
     return 0;
 }
 
-int SearchBFS()
+int SearchAStar()
 {
-    queue<Node> frontier;
+    priority_queue<Node> frontier;
     bool frontierCheck[MAX][MAX] = {0};
-    bool explored[MAX][MAX] = {0};
 
     frontier.push(MakeNode(1, 0, 0));
     frontierCheck[0][0] = 1;
@@ -90,20 +95,19 @@ int SearchBFS()
             return -1;
         }
 
-        Node node = frontier.front();
+        Node node = frontier.top();
         frontier.pop();
         frontierCheck[node.point.x][node.point.y] = 0;
-        explored[node.point.x][node.point.y] = 1;
 
         // Top
         if ((node.point.y > 0) && (TABLE[node.point.x][node.point.y - 1] == 1))
         {
-            Node child = MakeNode(node.path_cost + 1, node.point.x, (node.point.y - 1));
-            if (frontierCheck[child.point.x][child.point.y] == 0 && explored[child.point.x][child.point.y] == 0)
+            Node child = MakeNode(node.gn + 1, node.point.x, (node.point.y - 1));
+            if (frontierCheck[child.point.x][child.point.y] == 0)
             {
                 if (GoalTest(child.point))
                 {
-                    return child.path_cost;
+                    return child.gn;
                 }
                 else
                 {
@@ -116,12 +120,12 @@ int SearchBFS()
         // Bottom
         if ((node.point.y < N) && (TABLE[node.point.x][node.point.y + 1] == 1))
         {
-            Node child = MakeNode(node.path_cost + 1, node.point.x, (node.point.y + 1));
-            if (frontierCheck[child.point.x][child.point.y] == 0 && explored[child.point.x][child.point.y] == 0)
+            Node child = MakeNode(node.gn + 1, node.point.x, (node.point.y + 1));
+            if (frontierCheck[child.point.x][child.point.y] == 0)
             {
                 if (GoalTest(child.point))
                 {
-                    return child.path_cost;
+                    return child.gn;
                 }
                 else
                 {
@@ -134,12 +138,12 @@ int SearchBFS()
         // Left
         if ((node.point.x > 0) && (TABLE[node.point.x - 1][node.point.y] == 1))
         {
-            Node child = MakeNode(node.path_cost + 1, (node.point.x - 1), node.point.y);
-            if (frontierCheck[child.point.x][child.point.y] == 0 && explored[child.point.x][child.point.y] == 0)
+            Node child = MakeNode(node.gn + 1, (node.point.x - 1), node.point.y);
+            if (frontierCheck[child.point.x][child.point.y] == 0)
             {
                 if (GoalTest(child.point))
                 {
-                    return child.path_cost;
+                    return child.gn;
                 }
                 else
                 {
@@ -152,12 +156,12 @@ int SearchBFS()
         // Right
         if ((node.point.x < M) && (TABLE[node.point.x + 1][node.point.y] == 1))
         {
-            Node child = MakeNode(node.path_cost + 1, (node.point.x + 1), node.point.y);
-            if (frontierCheck[child.point.x][child.point.y] == 0 && explored[child.point.x][child.point.y] == 0)
+            Node child = MakeNode(node.gn + 1, (node.point.x + 1), node.point.y);
+            if (frontierCheck[child.point.x][child.point.y] == 0)
             {
                 if (GoalTest(child.point))
                 {
-                    return child.path_cost;
+                    return child.gn;
                 }
                 else
                 {
@@ -167,9 +171,6 @@ int SearchBFS()
             }
         }
     }
-
-    // Failure
-    return -1;
 }
 
 bool GoalTest(Point point)
@@ -187,13 +188,25 @@ Point MakePoint(int x, int y)
     return point;
 }
 
-Node MakeNode(int path_cost, int x, int y)
+Node MakeNode(int gn, int x, int y)
 {
     Node node;
+    int hn = ParseHN(x, y);
     Point point = MakePoint(x, y);
 
-    node.path_cost = (short)path_cost;
+    node.gn = gn;
+    node.hn = hn;
     node.point = point;
 
     return node;
+}
+
+int ParseHN(int x, int y)
+{
+    return (N - (y + 1)) + (M - (x + 1));
+}
+
+bool operator<(Node n1, Node n2)
+{
+    return (n1.gn + n1.hn) > (n2.gn + n2.hn);
 }
