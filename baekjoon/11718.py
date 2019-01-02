@@ -11,7 +11,7 @@
         Online Judge
 """
 while True:
-    s = input()
-    if (len(s) == 0):
+    try:
+        print(input())
+    except EOFError:
         break
-    print(s)
