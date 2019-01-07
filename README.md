@@ -6,6 +6,7 @@ Playground for the computer algorithms.
 
 - `backjoon`: [Baekjoon Online Judge] 문제 풀이
 - `lecture2016`: 부산대학교 컴퓨터 알고리즘 2016년도 수업 과제 풀이
+- `strategies`: [알고리즘 문제 해결 전략] 예제 문제 풀이
 
 ## License
 
@@ -33,4 +34,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
+
 [Baekjoon Online Judge]: https://www.acmicpc.net
+[알고리즘 문제 해결 전략]: http://book.algospot.com
