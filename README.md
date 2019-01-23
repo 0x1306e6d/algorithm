@@ -13,7 +13,7 @@ Playground for the computer algorithms.
 ```
 MIT License
 
-Copyright (c) 2018-2019 gihwan
+Copyright (c) 2018-2019 Gihwan Kim
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
