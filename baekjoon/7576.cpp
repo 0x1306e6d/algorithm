@@ -1,14 +1,45 @@
 /*
     7576 : 토마토
     URL : https://www.acmicpc.net/problem/7576
-    Input : 
+    Input #1 :
         6 4
         0 0 0 0 0 0
         0 0 0 0 0 0
         0 0 0 0 0 0
         0 0 0 0 0 1
-    Output :
+    Output #1 :
         8
+    Input #2 :
+        6 4
+        0 -1 0 0 0 0
+        -1 0 0 0 0 0
+        0 0 0 0 0 0
+        0 0 0 0 0 1
+    Output #2 :
+        -1
+    Input #3 :
+        6 4
+        1 -1 0 0 0 0
+        0 -1 0 0 0 0
+        0 0 0 0 -1 0
+        0 0 0 0 -1 1
+    Output #3 :
+        6
+    Input #4 :
+        5 5
+        -1 1 0 0 0
+        0 -1 -1 -1 0
+        0 -1 -1 -1 0
+        0 -1 -1 -1 0
+        0 0 0 0 0
+    Output #4 :
+        14
+    Input #5 :
+        2 2
+        1 -1
+        -1 1
+    Output #5 :
+        0
 */
 #include <iostream>
 #include <queue>
@@ -52,7 +83,7 @@ int main()
     }
 
     int day = 0;
-    while (true)
+    while (goal > 0)
     {
         day++;
 
@@ -111,13 +142,9 @@ int main()
                 }
             }
         }
-
-        if (goal == 0)
-        {
-            cout << day;
-            return 0;
-        }
     }
+
+    cout << day;
 
     return 0;
 }
