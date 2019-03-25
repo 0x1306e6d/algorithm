@@ -7,11 +7,12 @@
         198
 """
 
-n = int(input())
-cipher = len(str(n))
+n = input()
+cipher = len(n)
+n = int(n)
 
 answer = None
-for i in range(n - (cipher * 9), n + 1):
+for i in range(max(0, n - (cipher * 9)), n + 1):
     array = list(map(int, str(i)))
     number = i + sum(array)
     if n == number:
