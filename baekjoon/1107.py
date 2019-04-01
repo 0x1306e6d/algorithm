@@ -50,9 +50,9 @@ N = input()
 M = int(input())
 if M > 0:
     unavailable = set(map(int, input().split()))
-    available = list(set(range(10)) - unavailable)
+    available = sorted(list(set(range(10)) - unavailable))
 else:
-    available = list(range(10))
+    available = sorted(list(range(10)))
 
 n = int(N)
 N = list(map(int, N))
@@ -90,7 +90,9 @@ if available:
             lower_as_number = reduce(lambda x, y: x * 10 + y, p)
             break
 
-    count = min(count, len(upper) + upper_as_number - n)
-    count = min(count, len(lower) + n - lower_as_number)
+    if upper:
+        count = min(count, len(upper) + upper_as_number - n)
+    if lower:
+        count = min(count, len(lower) + n - lower_as_number)
 
 print(count)
