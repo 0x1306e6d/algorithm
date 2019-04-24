@@ -35,21 +35,23 @@ int fence(int start, int end)
 
     surface = std::max(fence(start, mid), fence(mid + 1, end));
 
-    int left = (mid - 1);
+    int left = mid;
     int right = (mid + 1);
-    int height = heights[mid];
-    int width = 1;
-    while ((left >= start) && (right <= end))
+    int height = std::min(heights[left], heights[right]);
+    int width = 2;
+    surface = std::max(surface, (height * width));
+    while ((start < left) || (right < end))
     {
-        if (heights[left] < heights[right])
+        if ((right < end) &&
+            ((left == start) || (heights[left - 1] < heights[right + 1])))
         {
-            height = std::min(height, heights[right]);
             right++;
+            height = std::min(height, heights[right]);
         }
         else
         {
-            height = std::min(height, heights[left]);
             left--;
+            height = std::min(height, heights[left]);
         }
         width++;
 
