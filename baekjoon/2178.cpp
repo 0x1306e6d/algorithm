@@ -17,196 +17,110 @@
         111101
     Output #2:
         9
+    Input #3:
+        2 25
+        1011101110111011101110111
+        1110111011101110111011101
+    Output #3:
+        38
+    Input #4:
+        7 7
+        1011111
+        1110001
+        1000001
+        1000001
+        1000001
+        1000001
+        1111111
+    Output #4:
+        13
 */
+
 #include <iostream>
 #include <queue>
+#include <string>
 #include <vector>
-#include <functional>
-#include <stdio.h>
 
-#define MAX 101
+#define MAX_N 101
+#define MAX_M 101
 
-using namespace std;
-
-typedef struct
+struct point
 {
-    char x;
-    char y;
-} Point;
+    int x;
+    int y;
+};
 
-typedef struct
+int discovered[MAX_N][MAX_M];
+std::vector<struct point> maze[MAX_N][MAX_M];
+
+int main(int argc, char const *argv[])
 {
-    int gn;
-    int hn;
-    Point point;
-} Node;
+    int n;
+    int m;
+    std::cin >> n;
+    std::cin >> m;
 
-int SearchAStar();
-bool GoalTest(Point point);
-Point MakePoint(int x, int y);
-Node MakeNode(int gn, int x, int y);
-int ParseHN(int x, int y);
-
-int N;
-int M;
-bool TABLE[MAX][MAX];
-
-int main()
-{
-    cin >> N;
-    cin >> M;
-
-    for (int y = 0; y < N; y++)
+    for (int i = 0; i < n; i++)
     {
-        char column[M];
-        cin >> column;
+        int y = i + 1;
 
-        for (int x = 0; x < M; x++)
+        std::string row;
+        std::cin >> row;
+
+        for (int j = 0; j < m; j++)
         {
-            if (column[x] == '1')
+            if (row[j] == '1')
             {
-                TABLE[x][y] = 1;
+                int x = j + 1;
+                struct point p = {x, y};
+
+                if (x > 1)
+                {
+                    maze[y][x - 1].push_back(p);
+                }
+                if (x < m)
+                {
+                    maze[y][x + 1].push_back(p);
+                }
+                if (y > 1)
+                {
+                    maze[y - 1][x].push_back(p);
+                }
+                if (y < n)
+                {
+                    maze[y + 1][x].push_back(p);
+                }
+            }
+        }
+    }
+
+    std::queue<struct point> q;
+    q.push({1, 1});
+    discovered[1][1] = 1;
+    while (!q.empty())
+    {
+        struct point p = q.front();
+        q.pop();
+
+        std::vector<struct point> nexts = maze[p.y][p.x];
+        for (int i = 0; i < nexts.size(); i++)
+        {
+            struct point next = nexts[i];
+            if ((next.y == n) && (next.x == m))
+            {
+                std::cout << discovered[p.y][p.x] + 1;
+                return 0;
             }
             else
             {
-                TABLE[x][y] = 0;
+                if (discovered[next.y][next.x] == 0)
+                {
+                    discovered[next.y][next.x] = discovered[p.y][p.x] + 1;
+                    q.push(next);
+                }
             }
         }
     }
-
-    int min = SearchAStar();
-    cout << min;
 
     return 0;
-}
-
-int SearchAStar()
-{
-    priority_queue<Node> frontier;
-    bool frontierCheck[MAX][MAX] = {0};
-
-    frontier.push(MakeNode(1, 0, 0));
-    frontierCheck[0][0] = 1;
-    while (1)
-    {
-        if (frontier.empty())
-        {
-            // Failure
-            return -1;
-        }
-
-        Node node = frontier.top();
-        frontier.pop();
-        frontierCheck[node.point.x][node.point.y] = 0;
-
-        // Top
-        if ((node.point.y > 0) && (TABLE[node.point.x][node.point.y - 1] == 1))
-        {
-            Node child = MakeNode(node.gn + 1, node.point.x, (node.point.y - 1));
-            if (frontierCheck[child.point.x][child.point.y] == 0)
-            {
-                if (GoalTest(child.point))
-                {
-                    return child.gn;
-                }
-                else
-                {
-                    frontier.push(child);
-                    frontierCheck[child.point.x][child.point.y] = 1;
-                }
-            }
-        }
-
-        // Bottom
-        if ((node.point.y < N) && (TABLE[node.point.x][node.point.y + 1] == 1))
-        {
-            Node child = MakeNode(node.gn + 1, node.point.x, (node.point.y + 1));
-            if (frontierCheck[child.point.x][child.point.y] == 0)
-            {
-                if (GoalTest(child.point))
-                {
-                    return child.gn;
-                }
-                else
-                {
-                    frontier.push(child);
-                    frontierCheck[child.point.x][child.point.y] = 1;
-                }
-            }
-        }
-
-        // Left
-        if ((node.point.x > 0) && (TABLE[node.point.x - 1][node.point.y] == 1))
-        {
-            Node child = MakeNode(node.gn + 1, (node.point.x - 1), node.point.y);
-            if (frontierCheck[child.point.x][child.point.y] == 0)
-            {
-                if (GoalTest(child.point))
-                {
-                    return child.gn;
-                }
-                else
-                {
-                    frontier.push(child);
-                    frontierCheck[child.point.x][child.point.y] = 1;
-                }
-            }
-        }
-
-        // Right
-        if ((node.point.x < M) && (TABLE[node.point.x + 1][node.point.y] == 1))
-        {
-            Node child = MakeNode(node.gn + 1, (node.point.x + 1), node.point.y);
-            if (frontierCheck[child.point.x][child.point.y] == 0)
-            {
-                if (GoalTest(child.point))
-                {
-                    return child.gn;
-                }
-                else
-                {
-                    frontier.push(child);
-                    frontierCheck[child.point.x][child.point.y] = 1;
-                }
-            }
-        }
-    }
-}
-
-bool GoalTest(Point point)
-{
-    return (point.x == (M - 1)) && (point.y == (N - 1));
-}
-
-Point MakePoint(int x, int y)
-{
-    Point point;
-
-    point.x = (char)x;
-    point.y = (char)y;
-
-    return point;
-}
-
-Node MakeNode(int gn, int x, int y)
-{
-    Node node;
-    int hn = ParseHN(x, y);
-    Point point = MakePoint(x, y);
-
-    node.gn = gn;
-    node.hn = hn;
-    node.point = point;
-
-    return node;
-}
-
-int ParseHN(int x, int y)
-{
-    return (N - (y + 1)) + (M - (x + 1));
-}
-
-bool operator<(Node n1, Node n2)
-{
-    return (n1.gn + n1.hn) > (n2.gn + n2.hn);
 }
