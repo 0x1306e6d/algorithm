@@ -18,6 +18,7 @@
 */
 
 #include <iostream>
+#include <cstdio>
 
 #define MAX_N 1000001
 
@@ -63,12 +64,9 @@ void merge(int i, int j)
 
 int main(int argc, char const *argv[])
 {
-    std::ios::sync_with_stdio(false);
-
     int n;
     int m;
-    std::cin >> n;
-    std::cin >> m;
+    scanf("%d %d", &n, &m);
 
     for (int i = 0; i < (n + 1); i++)
     {
@@ -80,9 +78,7 @@ int main(int argc, char const *argv[])
     int b;
     for (int i = 0; i < m; i++)
     {
-        std::cin >> c;
-        std::cin >> a;
-        std::cin >> b;
+        scanf("%d %d %d", &c, &a, &b);
 
         if (c == 0)
         {
@@ -95,11 +91,11 @@ int main(int argc, char const *argv[])
 
             if (a == b)
             {
-                std::cout << "YES\n";
+                printf("YES\n");
             }
             else
             {
-                std::cout << "NO\n";
+                printf("NO\n");
             }
         }
     }
