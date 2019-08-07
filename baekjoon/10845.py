@@ -33,16 +33,35 @@
         3
 """
 
+import sys
+
+
+class Item:
+    def __init__(self, value):
+        self.value = value
+        self.top = None
+        self.bottom = None
+
 
 class Queue:
     def __init__(self):
-        self._data = []
+        self._size = 0
+        self._top = None
+        self._bottom = None
 
     def push(self, x):
         """
         정수 x를 큐에 넣는 연산이다.
         """
-        self._data += [x]
+        item = Item(x)
+        if self._size == 0:
+            self._top = item
+            self._bottom = item
+        else:
+            item.bottom = self._top
+            self._top.top = item
+            self._top = item
+        self._size += 1
 
     def pop(self):
         """
@@ -52,21 +71,29 @@ class Queue:
         if self.empty():
             return -1
         else:
-            first = self._data[0]
-            self._data = self._data[1:]
-            return first
+            bottom = self._bottom
+            self._bottom = bottom.top
+            if self._bottom is not None:
+                self._bottom.bottom = None
+            self._size -= 1
+
+            if self._size == 0:
+                self._top = None
+                self._bottom = None
+
+            return bottom.value
 
     def size(self):
         """
         큐에 들어있는 정수의 개수를 출력한다.
         """
-        return len(self._data)
+        return self._size
 
     def empty(self):
         """
         큐가 비어있으면 1, 아니면 0을 출력한다.
         """
-        if self._data:
+        if self._size > 0:
             return 0
         else:
             return 1
@@ -79,7 +106,7 @@ class Queue:
         if self.empty():
             return -1
         else:
-            return self._data[0]
+            return self._bottom.value
 
     def back(self):
         """
@@ -89,15 +116,15 @@ class Queue:
         if self.empty():
             return -1
         else:
-            return self._data[-1]
+            return self._top.value
 
 
-N = int(input())
+N = int(sys.stdin.readline())
 
 queue = Queue()
 
 for _ in range(N):
-    cmd = input().split(' ')
+    cmd = sys.stdin.readline().rstrip().split(' ')
     if len(cmd) is 1:
         cmd = cmd[0]
     else:
@@ -107,12 +134,12 @@ for _ in range(N):
     if cmd == 'push':
         queue.push(x)
     elif cmd == 'pop':
-        print(queue.pop())
+        sys.stdout.write("{}\n".format(queue.pop()))
     elif cmd == 'size':
-        print(queue.size())
+        sys.stdout.write("{}\n".format(queue.size()))
     elif cmd == 'empty':
-        print(queue.empty())
+        sys.stdout.write("{}\n".format(queue.empty()))
     elif cmd == 'front':
-        print(queue.front())
+        sys.stdout.write("{}\n".format(queue.front()))
     elif cmd == 'back':
-        print(queue.back())
+        sys.stdout.write("{}\n".format(queue.back()))
