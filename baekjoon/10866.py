@@ -74,25 +74,49 @@
         20
 """
 
+import sys
+
+
+class Item:
+    def __init__(self, value):
+        self.value = value
+        self.top = None
+        self.bottom = None
+
 
 class Deque:
     def __init__(self):
-        self._data = []
-
-    def __str__(self):
-        return str(self._data)
+        self._size = 0
+        self._top = None
+        self._bottom = None
 
     def push_front(self, x):
         """
         정수 X를 덱의 앞에 넣는다.
         """
-        self._data.insert(0, x)
+        item = Item(x)
+        if self._size == 0:
+            self._top = item
+            self._bottom = item
+        else:
+            item.top = self._bottom
+            self._bottom.bottom = item
+            self._bottom = item
+        self._size += 1
 
     def push_back(self, x):
         """
         정수 X를 덱의 뒤에 넣는다.
         """
-        self._data.append(x)
+        item = Item(x)
+        if self._size == 0:
+            self._top = item
+            self._bottom = item
+        else:
+            item.bottom = self._top
+            self._top.top = item
+            self._top = item
+        self._size += 1
 
     def pop_front(self):
         """
@@ -102,9 +126,17 @@ class Deque:
         if self.empty():
             return -1
         else:
-            first = self._data[0]
-            self._data = self._data[1:]
-            return first
+            bottom = self._bottom
+            self._bottom = bottom.top
+            if self._bottom is not None:
+                self._bottom.bottom = None
+            self._size -= 1
+
+            if self._size == 0:
+                self._top = None
+                self._bottom = None
+
+            return bottom.value
 
     def pop_back(self):
         """
@@ -114,21 +146,29 @@ class Deque:
         if self.empty():
             return -1
         else:
-            last = self._data[-1]
-            self._data = self._data[:-1]
-            return last
+            top = self._top
+            self._top = top.bottom
+            if self._top is not None:
+                self._top.top = None
+            self._size -= 1
+
+            if self._size == 0:
+                self._top = None
+                self._bottom = None
+
+            return top.value
 
     def size(self):
         """
         덱에 들어있는 정수의 개수를 출력한다.
         """
-        return len(self._data)
+        return self._size
 
     def empty(self):
         """
         덱이 비어있으면 1을, 아니면 0을 출력한다.
         """
-        if self._data:
+        if self._size > 0:
             return 0
         else:
             return 1
@@ -141,7 +181,7 @@ class Deque:
         if self.empty():
             return -1
         else:
-            return self._data[0]
+            return self._bottom.value
 
     def back(self):
         """
@@ -151,14 +191,14 @@ class Deque:
         if self.empty():
             return -1
         else:
-            return self._data[-1]
+            return self._top.value
 
 
 deque = Deque()
 
-N = int(input())
+N = int(sys.stdin.readline())
 for _ in range(N):
-    cmd = input().split(' ')
+    cmd = sys.stdin.readline().rstrip().split(' ')
     if len(cmd) is 1:
         cmd = cmd[0]
     else:
@@ -170,14 +210,14 @@ for _ in range(N):
     elif cmd == 'push_back':
         deque.push_back(x)
     elif cmd == 'pop_front':
-        print(deque.pop_front())
+        sys.stdout.write("{}\n".format(deque.pop_front()))
     elif cmd == 'pop_back':
-        print(deque.pop_back())
+        sys.stdout.write("{}\n".format(deque.pop_back()))
     elif cmd == 'size':
-        print(deque.size())
+        sys.stdout.write("{}\n".format(deque.size()))
     elif cmd == 'empty':
-        print(deque.empty())
+        sys.stdout.write("{}\n".format(deque.empty()))
     elif cmd == 'front':
-        print(deque.front())
+        sys.stdout.write("{}\n".format(deque.front()))
     elif cmd == 'back':
-        print(deque.back())
+        sys.stdout.write("{}\n".format(deque.back()))
