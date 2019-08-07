@@ -47,16 +47,35 @@
         -1
 """
 
+import sys
+
+
+class Item:
+    def __init__(self, value):
+        self.value = value
+        self.top = None
+        self.bottom = None
+
 
 class Stack:
     def __init__(self):
-        self._data = []
+        self._size = 0
+        self._top = None
+        self._bottom = None
 
     def push(self, x):
         """
         정수 X를 스택에 넣는 연산이다.
         """
-        self._data += [x]
+        item = Item(x)
+        if self._size == 0:
+            self._top = item
+            self._bottom = item
+        else:
+            item.bottom = self._top
+            self._top.top = item
+            self._top = item
+        self._size += 1
 
     def pop(self):
         """
@@ -66,21 +85,29 @@ class Stack:
         if self.empty():
             return -1
         else:
-            last = self._data[-1]
-            self._data = self._data[:-1]
-            return last
+            top = self._top
+            self._top = top.bottom
+            if self._top is not None:
+                self._top.top = None
+            self._size -= 1
+
+            if self._size == 0:
+                self._top = None
+                self._bottom = None
+
+            return top.value
 
     def size(self):
         """
         스택에 들어있는 정수의 개수를 출력한다.
         """
-        return len(self._data)
+        return self._size
 
     def empty(self):
         """
         스택이 비어있으면 1, 아니면 0을 출력한다.
         """
-        if self._data:
+        if self._size > 0:
             return 0
         else:
             return 1
@@ -93,15 +120,15 @@ class Stack:
         if self.empty():
             return -1
         else:
-            return self._data[-1]
+            return self._top.value
 
 
-N = int(input())
+N = int(sys.stdin.readline())
 
 stack = Stack()
 
 for _ in range(N):
-    cmd = input().split(' ')
+    cmd = sys.stdin.readline().rstrip().split(' ')
     if len(cmd) is 1:
         cmd = cmd[0]
     else:
@@ -111,10 +138,10 @@ for _ in range(N):
     if cmd == 'push':
         stack.push(x)
     elif cmd == 'pop':
-        print(stack.pop())
+        sys.stdout.write("{}\n".format(stack.pop()))
     elif cmd == 'size':
-        print(stack.size())
+        sys.stdout.write("{}\n".format(stack.size()))
     elif cmd == 'empty':
-        print(stack.empty())
+        sys.stdout.write("{}\n".format(stack.empty()))
     elif cmd == 'top':
-        print(stack.top())
+        sys.stdout.write("{}\n".format(stack.top()))
