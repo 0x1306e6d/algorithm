@@ -47,56 +47,62 @@ using namespace std;
 
 int N;
 int ARRAY[MAX_N];
+int TEMP[MAX_N];
 int COUNT[MAX_NUMBER];
 
-int partition(int left, int right)
+void merge(int left, int mid, int right)
 {
-    int low = left + 1;
-    int high = right;
-    int pivot = ARRAY[left];
+    int i = left;
+    int j = mid + 1;
+    int k = left;
 
-    while (low <= high)
+    while ((i <= mid) && (j <= right))
     {
-        while ((low <= right) && ARRAY[low] <= pivot)
+        if (ARRAY[i] <= ARRAY[j])
         {
-            if (low == (N - 1))
-            {
-                break;
-            }
-            low++;
+            TEMP[k] = ARRAY[i];
+            i++;
         }
-        while (((left + 1) <= high) && (ARRAY[high] > pivot))
+        else
         {
-            high--;
+            TEMP[k] = ARRAY[j];
+            j++;
         }
+        k++;
+    }
 
-        if (low <= high)
+    if (i > mid)
+    {
+        for (int l = j; l <= right; l++)
         {
-            int temp = ARRAY[low];
-            ARRAY[low] = ARRAY[high];
-            ARRAY[high] = temp;
+            TEMP[k] = ARRAY[l];
+            k++;
         }
-        if (low == (N - 1))
+    }
+    else
+    {
+        for (int l = i; l <= mid; l++)
         {
-            break;
+            TEMP[k] = ARRAY[l];
+            k++;
         }
     }
 
-    int temp = ARRAY[left];
-    ARRAY[left] = ARRAY[high];
-    ARRAY[high] = temp;
-
-    return high;
+    for (int l = left; l <= right; l++)
+    {
+        ARRAY[l] = TEMP[l];
+    }
 }
 
-void quicksort(int left, int right)
+void msort(int left, int right)
 {
-    if (left <= right)
+    if (left < right)
     {
-        int pivot = partition(left, right);
+        int mid = (left + right) / 2;
+        msort(left, mid);
+        msort(mid + 1, right);
 
-        quicksort(left, pivot - 1);
-        quicksort(pivot + 1, right);
+        merge(left, mid, right);
     }
 }
 
@@ -122,7 +128,7 @@ int main(int argc, char const *argv[])
         }
     }
 
-    quicksort(0, N - 1);
+    msort(0, N - 1);
 
     bool first = false;
     int mode = numeric_limits<int>::min();
