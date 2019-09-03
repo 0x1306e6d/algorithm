@@ -29,14 +29,25 @@ int main(int argc, char const *argv[])
         std::cin >> a[i];
     }
 
-    for (int i = n - 1; i >= 0; i--)
+    std::vector<int> stack;
+    stack.push_back(a[n - 1]);
+    for (int i = n - 2; i >= 0; i--)
     {
-        int x = a[i];
-
-        for (int j = i - 1; (a[j] < x) && (j >= 0); j--)
+        while (!stack.empty())
         {
-            nge[j] = x;
+            int back = stack.back();
+            if (back > a[i])
+            {
+                nge[i] = back;
+                break;
+            }
+            else
+            {
+                stack.pop_back();
+            }
         }
+
+        stack.push_back(a[i]);
     }
 
     for (int i = 0; i < n; i++)
