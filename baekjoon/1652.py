@@ -27,18 +27,32 @@ for i in range(n):
 x_count = 0
 y_count = 0
 
-for x in room_x:
-    a = False
-    for b in x:
-        if (a == True) and (b == True):
-            x_count += 1
-        a = b
+for row in room_x:
+    space = 0
 
-for y in room_y:
-    a = False
-    for b in y:
-        if (a == True) and (b == True):
-            y_count += 1
-        a = b
+    for x in row:
+        if x == True:
+            space += 1
+        else:
+            if space >= 2:
+                x_count += 1
+            space = 0
+
+    if space >= 2:
+        x_count += 1
+
+for column in room_y:
+    space = 0
+
+    for y in column:
+        if y == True:
+            space += 1
+        else:
+            if space >= 2:
+                y_count += 1
+            space = 0
+
+    if space >= 2:
+        y_count += 1
 
 print("{} {}".format(x_count, y_count))
