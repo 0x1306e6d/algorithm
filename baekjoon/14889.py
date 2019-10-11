@@ -33,7 +33,7 @@
         1
 """
 
-from itertools import permutations
+from itertools import combinations
 
 ability = []
 
@@ -44,7 +44,7 @@ for _ in range(n):
 
 m = n // 2
 min_difference = 987654321
-for team_a in permutations(range(n), m):
+for team_a in combinations(range(n), m):
     team_a = set(team_a)
     team_b = set(range(n)) - team_a
 
