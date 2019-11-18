@@ -6,6 +6,7 @@
     Output :
         4
 */
+
 #include <iostream>
 #include <vector>
 #include <set>
@@ -31,7 +32,7 @@ int main()
     for (int i = 1; ; ++i)
     {
         long long p = parse(i);
-        D.push_back(p)
+        D.push_back(p);
 
         if (SEARCH.find(p) == SEARCH.end())
         {

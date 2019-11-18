@@ -1,5 +1,5 @@
 /*
-    11068 : 회문인 숫자
+    11068 : 회문인 수
     URL : https://www.acmicpc.net/problem/11068
     Input :
         3
@@ -11,6 +11,7 @@
         1
         0
 */
+
 #include <iostream>
 #include <vector>
 

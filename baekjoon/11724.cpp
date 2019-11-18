@@ -23,6 +23,7 @@
     Output #2 :
         1
 */
+
 #include <iostream>
 #include <vector>
 #include <string.h>

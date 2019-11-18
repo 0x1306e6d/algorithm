@@ -14,6 +14,7 @@
     Output #2 :
         Deletion failed
 */
+
 #include <iostream>
 #include <string>
 

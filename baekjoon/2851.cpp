@@ -15,6 +15,7 @@
     Output :
         100
 */
+
 #include <iostream>
 #include <cstdlib>
 

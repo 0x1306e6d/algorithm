@@ -6,6 +6,7 @@
     Output :
         4.0
 */
+
 #include <iostream>
 #include <stdio.h>
 
