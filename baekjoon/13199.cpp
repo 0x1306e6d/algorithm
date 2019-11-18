@@ -9,6 +9,7 @@
         0
         1
 */
+
 #include <iostream>
 
 int main()
