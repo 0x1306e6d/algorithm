@@ -1,3 +1,12 @@
+/*
+    8394 : 악수
+    URL : https://www.acmicpc.net/problem/8394
+    Input :
+		4
+    Output :
+		5
+*/
+
 #include<iostream>
 
 using namespace std;
