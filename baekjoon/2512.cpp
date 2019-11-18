@@ -1,3 +1,14 @@
+/*
+    2512 : 예산
+    URL : https://www.acmicpc.net/problem/2512
+    Input :
+		4
+		120 110 140 150
+		485
+    Output :
+		127
+*/
+
 #include <iostream>
 
 using namespace std;
@@ -6,7 +17,7 @@ int main()
 {
 	int N, M;
 	int sum = 0, big = 0;
-	int* arr;
+	int *arr;
 	cin >> N;
 	arr = new int[N];
 	for (int i = 0; i < N; ++i)
@@ -28,13 +39,6 @@ int main()
 		return 0;
 	}
 
-	
-/*
-4
-120 110 140 150
-485
-*/
-
 	bool flag = false;
 	int average = M / N;
 	int remain = M;
@@ -52,10 +56,7 @@ int main()
 		}
 	}
 
-
-	cout << "average=" << average << ", remain=" << remain << ", count=" << count << endl;
 	cout << (average + (remain / count)) << endl;
-	cout << sum;
 
 	return 0;
 }
