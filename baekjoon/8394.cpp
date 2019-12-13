@@ -1,36 +1,32 @@
-#include<iostream>
+/*
+    8394 : 악수
+    URL : https://www.acmicpc.net/problem/8394
+    Input :
+		4
+    Output :
+		5
+*/
 
-using namespace std;
+#include <iostream>
 
-int main()
+int main(int argc, char const *argv[])
 {
-	int n, c;
-	unsigned long long first = 1;
-	unsigned long long second = 2;
-	unsigned long long next;
-	cin >> n;
-	if (n == 1)
+	int n;
+	std::cin >> n;
+
+	int a = 0;
+	int b = 1;
+	int answer = 0;
+
+	for (int i = 0; i < n; i++)
 	{
-		cout << 1;
-		return 0;
+		answer = (a + b) % 10;
+
+		a = b;
+		b = answer;
 	}
-	if (n == 2)
-	{
-		cout << 2;
-		return 0;
-	}
-	for (c = 0; c < n; c++)
-	{
-		if (c <= 1)
-			next = c;
-		else
-		{
-			next = first + second;
-			first = second;
-			second = next;
-		}
-	}
-	cout << (next % 10);
+
+	std::cout << answer;
 
 	return 0;
 }
