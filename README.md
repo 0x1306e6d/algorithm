@@ -6,6 +6,7 @@ Playground for the Computer Algorithm
 
 - `baekjoon`: Playground for the [Baekjoon Online Judge]
 - `lecture2016`: Playground for the 부산대학교 컴퓨터 알고리즘 2016년도 수업 과제
+- `programmers`: Playground for the [programmers]
 - `strategies`: Playground for the [알고리즘 문제 해결 전략] Examples
 - `SWExpertAcademy`: Playground for the [SW Expert Academy]
 
@@ -35,7 +36,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-
-[Baekjoon Online Judge]: https://www.acmicpc.net
+[baekjoon online judge]: https://www.acmicpc.net
+[programmers]: https://programmers.co.kr
 [알고리즘 문제 해결 전략]: http://book.algospot.com
-[SW Expert Academy]: https://www.swexpertacademy.com
+[sw expert academy]: https://www.swexpertacademy.com
