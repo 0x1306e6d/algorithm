@@ -5,7 +5,6 @@
 ## Directories
 
 - `baekjoon`: Problems in [Baekjoon Online Judge]
-- `lecture2016`: 부산대학교 컴퓨터 알고리즘 2016년도 수업 과제
 - `programmers`: Problems in [programmers]
 - `snippets`: My algorithm snippets
 - `strategies`: Examples in [알고리즘 문제 해결 전략]
