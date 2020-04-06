@@ -7,7 +7,7 @@
 - `baekjoon`: Problems in [Baekjoon Online Judge]
 - `programmers`: Problems in [programmers]
 - `snippets`: My algorithm snippets
-- `strategies`: Examples in [알고리즘 문제 해결 전략
+- `strategies`: Examples in [알고리즘 문제 해결 전략]
 
 ## License
 
