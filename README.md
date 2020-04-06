@@ -7,8 +7,7 @@
 - `baekjoon`: Problems in [Baekjoon Online Judge]
 - `programmers`: Problems in [programmers]
 - `snippets`: My algorithm snippets
-- `strategies`: Examples in [알고리즘 문제 해결 전략]
-- `SWExpertAcademy`: Problems in [SW Expert Academy]
+- `strategies`: Examples in [알고리즘 문제 해결 전략
 
 ## License
 
@@ -39,4 +38,3 @@ SOFTWARE.
 [baekjoon online judge]: https://www.acmicpc.net
 [programmers]: https://programmers.co.kr
 [알고리즘 문제 해결 전략]: http://book.algospot.com
-[sw expert academy]: https://www.swexpertacademy.com
