@@ -2,7 +2,6 @@
 
 ![GitHub language count](https://img.shields.io/github/languages/count/ghkim3221/algorithm)
 ![GitHub top language](https://img.shields.io/github/languages/top/ghkim3221/algorithm)
-
 ![GitHub last commit](https://img.shields.io/github/last-commit/ghkim3221/algorithm)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/y/ghkim3221/algorithm)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/ghkim3221/algorithm)
