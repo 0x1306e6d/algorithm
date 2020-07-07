@@ -4,6 +4,7 @@
 ![GitHub top language](https://img.shields.io/github/languages/top/ghkim3221/algorithm)
 
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/ghkim3221/algorithm)
+![GitHub last commit](https://img.shields.io/github/last-commit/ghkim3221/algorithm)
 
 👨🏻‍💻 Algorithm as a Hobby
 
