@@ -1,6 +1,7 @@
 # algorithm
 
 ![GitHub language count](https://img.shields.io/github/languages/count/ghkim3221/algorithm?style=flat)
+![GitHub top language](https://img.shields.io/github/languages/top/ghkim3221/algorithm?style=flat)
 
 👨🏻‍💻 Algorithm as a Hobby
 
