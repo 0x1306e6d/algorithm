@@ -1,3 +1,10 @@
+"""
+    File: 648.py
+    Title: Replace Words
+    Difficulty: Medium
+    URL: https://leetcode.com/problems/replace-words/
+"""
+
 import unittest
 
 from typing import List
