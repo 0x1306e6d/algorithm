@@ -1,3 +1,3 @@
 # snippets
 
-Playground for my Algorithm Snippets
+My algorithm snippets

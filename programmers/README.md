@@ -1,5 +1,3 @@
 # programmers
 
-Playground for the [programmers]
-
-[programmers]: https://programmers.co.kr
+Problems in [programmers](https://programmers.co.kr)
