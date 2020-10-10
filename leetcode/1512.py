@@ -18,3 +18,36 @@ class Solution:
                 if nums[i] == nums[j]:
                     count += 1
         return count
+
+
+class SolutionTestCase(unittest.TestCase):
+    def test_example1(self):
+        # Input
+        nums = [1, 2, 3, 1, 1, 3]
+        # Output
+        output = 4
+
+        solution = Solution()
+        self.assertEqual(solution.numIdenticalPairs(nums), output)
+
+    def test_example2(self):
+        # Input
+        nums = [1, 1, 1, 1]
+        # Output
+        output = 6
+
+        solution = Solution()
+        self.assertEqual(solution.numIdenticalPairs(nums), output)
+
+    def test_example3(self):
+        # Input
+        nums = [1, 2, 3]
+        # Output
+        output = 0
+
+        solution = Solution()
+        self.assertEqual(solution.numIdenticalPairs(nums), output)
+
+
+if __name__ == "__main__":
+    unittest.main()
