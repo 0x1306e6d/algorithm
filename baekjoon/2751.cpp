@@ -22,45 +22,63 @@
 
 using namespace std;
 
-int N;
-int ARRAY[MAX_N];
+int n;
+int a[MAX_N];
+int temp[MAX_N];
 
-void qsort(int low, int high)
+void merge(int left, int mid, int right)
 {
-    int i = low;
-    int j = high;
-    int pivot = ARRAY[(low + high) / 2];
+    int i = left;
+    int j = mid + 1;
+    int k = left;
 
-    do
+    while ((i <= mid) && (j <= right))
     {
-        while (ARRAY[i] < pivot && i <= high)
+        if (a[i] < a[j])
         {
+            temp[k] = a[i];
             i++;
         }
-
-        while (ARRAY[j] > pivot && j > low)
+        else
         {
-            j--;
+            temp[k] = a[j];
+            j++;
         }
-
-        if (i <= j)
-        {
-            int temp = ARRAY[i];
-            ARRAY[i] = ARRAY[j];
-            ARRAY[j] = temp;
-
-            i++;
-            j--;
-        }
-    } while (i <= j);
-
-    if (low < j)
-    {
-        qsort(low, j);
+        k++;
     }
-    if (high > i)
+
+    if (i > mid)
     {
-        qsort(i, high);
+        for (int l = j; l <= right; l++)
+        {
+            temp[k] = a[l];
+            k++;
+        }
+    }
+    else
+    {
+        for (int l = i; l <= mid; l++)
+        {
+            temp[k] = a[l];
+            k++;
+        }
+    }
+
+    for (int l = left; l <= right; l++)
+    {
+        a[l] = temp[l];
+    }
+}
+
+void msort(int left, int right)
+{
+    if (left < right)
+    {
+        int mid = (left + right) / 2;
+        msort(left, mid);
+        msort(mid + 1, right);
+
+        merge(left, mid, right);
     }
 }
 
@@ -68,18 +86,18 @@ int main(int argc, char const *argv[])
 {
     ios::sync_with_stdio(false);
 
-    cin >> N;
+    cin >> n;
 
-    for (int i = 0; i < N; i++)
+    for (int i = 0; i < n; i++)
     {
-        cin >> ARRAY[i];
+        cin >> a[i];
     }
 
-    qsort(0, N - 1);
+    msort(0, n - 1);
 
-    for (int i = 0; i < N; i++)
+    for (int i = 0; i < n; i++)
     {
-        cout << ARRAY[i] << '\n';
+        cout << a[i] << '\n';
     }
 
     return 0;
