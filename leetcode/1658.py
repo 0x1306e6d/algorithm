@@ -13,24 +13,30 @@ from typing import List
 
 class Solution:
     def minOperations(self, nums: List[int], x: int) -> int:
-        s = sum(nums)
-
-        target = s - x
-
-        max_subarray = 0
-        for i in range(len(nums)):
-            count = 1
-            next_s = nums[i]
-            for j in range(i + 1, len(nums)):
-                if next_s == target:
-                    break
-                next_s += nums[j]
-                count += 1
-            if next_s == target:
-                max_subarray = max(max_subarray, count)
-        if max_subarray == 0:
+        length = len(nums)
+        target = sum(nums) - x
+        if target == 0:
+            return length
+        if target < 0:
             return -1
-        return len(nums) - max_subarray
+
+        i = 0
+        j = 0
+        subarray = 0
+        max_subarray = -1
+        while j < length:
+            while i < j and target < subarray + nums[j]:
+                subarray -= nums[i]
+                i += 1
+            subarray += nums[j]
+            j += 1
+
+            if subarray == target:
+                max_subarray = max(max_subarray, j - i)
+
+        if max_subarray == -1:
+            return -1
+        return length - max_subarray
 
 
 class SolutionTestCase(unittest.TestCase):
