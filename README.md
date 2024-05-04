@@ -12,6 +12,7 @@
 ## Directories
 
 - `baekjoon`: Problems in [Baekjoon Online Judge]
+- `codesignal`: Problems in [CodeSignal]
 - `leetcode`: Problems in [LeetCode]
 - `programmers`: Problems in [programmers]
 - `snippets`: My algorithm snippets
@@ -44,6 +45,7 @@ SOFTWARE.
 ```
 
 [baekjoon online judge]: https://www.acmicpc.net
+[CodeSignal]: https://codesignal.com
 [LeetCode]: https://leetcode.com
 [programmers]: https://programmers.co.kr
 [알고리즘 문제 해결 전략]: http://book.algospot.com
