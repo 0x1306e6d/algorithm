@@ -1,7 +1,7 @@
 """
     File: 1770.py
     Title: Maximum Score from Performing Multiplication Operations
-    Difficulty: Medium
+    Difficulty: Hard
     URL: https://leetcode.com/problems/maximum-score-from-performing-multiplication-operations/
 """
 
@@ -12,27 +12,26 @@ from typing import List
 
 class Solution:
     def maximumScore(self, nums: List[int], multipliers: List[int]) -> int:
-        n = len(nums)
-        m = len(multipliers)
+        n, m = len(nums), len(multipliers)
 
-        memo = {}
+        self.memo = {}
 
-        def operate(start: int, i: int) -> int:
-            if i >= m:
-                return 0
+        def dp(s, e, i):
+            if (s, e) in self.memo:
+                return self.memo[(s, e)]
+            if i == m - 1:
+                self.memo[(s, e)] = max(
+                    nums[s] * multipliers[i],
+                    nums[e] * multipliers[i],
+                )
+            else:
+                self.memo[(s, e)] = max(
+                    nums[s] * multipliers[i] + dp(s + 1, e, i + 1),
+                    nums[e] * multipliers[i] + dp(s, e - 1, i + 1),
+                )
+            return self.memo[(s, e)]
 
-            if start not in memo:
-                memo[start] = {}
-            if i in memo[start]:
-                return memo[start][i]
-
-            end = n - (i - start) - 1
-            s = operate(start + 1, i + 1) + (nums[start] * multipliers[i])
-            e = operate(start, i + 1) + (nums[end] * multipliers[i])
-            memo[start][i] = max(s, e)
-            return memo[start][i]
-
-        return operate(0, 0)
+        return dp(0, n - 1, 0)
 
 
 class SolutionTestCase(unittest.TestCase):
