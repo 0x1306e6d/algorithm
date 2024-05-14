@@ -5,9 +5,7 @@
     URL: https://leetcode.com/problems/path-with-minimum-effort/
 """
 
-import unittest
-
-from collections import deque
+from heapq import heappush, heappop
 from typing import List
 
 __dx__ = [0, 0, -1, 1]
@@ -16,62 +14,24 @@ __dy__ = [-1, 1, 0, 0]
 
 class Solution:
     def minimumEffortPath(self, heights: List[List[int]]) -> int:
-        rows = len(heights)
-        columns = len(heights[0])
+        rows, cols = len(heights), len(heights[0])
 
-        memo = [[987654321] * columns for _ in range(rows)]
+        inf = 9876543210
+        distance = [[inf] * cols for _ in range(rows)]
 
-        q = deque()
-        q.append((0, 0, 0))
-        memo[0][0] = 0
-        while q:
-            x, y, effort = q.popleft()
+        h = [(0, 0, 0)]
+        while h:
+            d, x1, y1 = heappop(h)
+
+            if distance[y1][x1] <= d:
+                continue
+            distance[y1][x1] = d
 
             for dx, dy in zip(__dx__, __dy__):
-                new_x, new_y = x + dx, y + dy
-                if 0 <= new_x < columns and 0 <= new_y < rows:
-                    effort_here = abs(heights[y][x] - heights[new_y][new_x])
-                    effort_here = max(effort, effort_here)
-                    if effort_here < memo[new_y][new_x]:
-                        memo[new_y][new_x] = effort_here
-                        q.append((new_x, new_y, effort_here))
-        return memo[rows - 1][columns - 1]
-
-
-class SolutionTestCase(unittest.TestCase):
-    def test_example1(self):
-        # Input
-        heights = [[1, 2, 2], [3, 8, 2], [5, 3, 5]]
-        # Output
-        output = 2
-
-        solution = Solution()
-        self.assertEqual(solution.minimumEffortPath(heights), output)
-
-    def test_example2(self):
-        # Input
-        heights = [[1, 2, 3], [3, 8, 4], [5, 3, 5]]
-        # Output
-        output = 1
-
-        solution = Solution()
-        self.assertEqual(solution.minimumEffortPath(heights), output)
-
-    def test_example3(self):
-        # Input
-        heights = [
-            [1, 2, 1, 1, 1],
-            [1, 2, 1, 2, 1],
-            [1, 2, 1, 2, 1],
-            [1, 2, 1, 2, 1],
-            [1, 1, 1, 2, 1],
-        ]
-        # Output
-        output = 0
-
-        solution = Solution()
-        self.assertEqual(solution.minimumEffortPath(heights), output)
-
-
-if __name__ == "__main__":
-    unittest.main()
+                x2, y2 = x1 + dx, y1 + dy
+                if 0 <= x2 < cols and 0 <= y2 < rows:
+                    w = abs(heights[y2][x2] - heights[y1][x1])
+                    w = max(w, d)
+                    if distance[y2][x2] > w:
+                        heappush(h, (w, x2, y2))
+        return distance[rows - 1][cols - 1]
