@@ -4,7 +4,6 @@
     Difficulty: Medium
 """
 
-from heapq import heappush, heappop
 from typing import List
 
 
@@ -13,20 +12,27 @@ class Solution:
         self, n: int, flights: List[List[int]], src: int, dst: int, k: int
     ) -> int:
         adj = [[] for _ in range(n)]
-        for f, t, p in flights:
-            adj[f].append((t, p))
+        for u, v, p in flights:
+            adj[u].append((v, p))
 
-        heap = [(0, src, k + 1)]
-        visited = [[False] * (k + 2) for _ in range(n)]
-        while heap:
-            d, u, kk = heappop(heap)
-            if kk < 0:
-                continue
-            if u == dst:
-                return d
-            if visited[u][kk]:
-                continue
-            visited[u][kk] = True
-            for v, w in adj[u]:
-                heappush(heap, (d + w, v, kk - 1))
-        return -1
+        inf = 9876543210
+        distance = [inf] * n
+        distance[src] = 0
+
+        prev = [(src, 0)]
+        for _ in range(k + 2):
+            curr = []
+
+            for u, d1 in prev:
+                if distance[u] < d1:
+                    continue
+                distance[u] = d1
+
+                for v, d2 in adj[u]:
+                    curr.append((v, d1 + d2))
+
+            prev = curr
+
+        if distance[dst] == inf:
+            return -1
+        return distance[dst]
