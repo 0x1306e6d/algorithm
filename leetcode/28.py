@@ -7,9 +7,25 @@
 
 class Solution:
     def strStr(self, haystack: str, needle: str) -> int:
-        if haystack == needle:
-            return 0
-        for i in range(len(haystack) - len(needle) + 1):
-            if haystack[i : i + len(needle)] == needle:
-                return i
+        n, m = len(haystack), len(needle)
+
+        pi = [0] * m
+        for begin in range(1, m):
+            for i in range(m - begin):
+                if needle[begin + i] != needle[i]:
+                    break
+                pi[begin + i] = max(pi[begin + i], i + 1)
+
+        begin = matched = 0
+        while begin <= n - m:
+            if matched < m and haystack[begin + matched] == needle[matched]:
+                matched += 1
+                if matched == m:
+                    return begin
+            else:
+                if matched == 0:
+                    begin += 1
+                else:
+                    begin += matched - pi[matched - 1]
+                    matched = pi[matched - 1]
         return -1
